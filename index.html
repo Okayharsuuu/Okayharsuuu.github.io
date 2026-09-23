@@ -92,6 +92,53 @@
 .project::after{z-index:1!important;opacity:.22!important;}
 .project .tag,.project h3,.project p,.project .more{z-index:3!important;}
 
+
+/* FINAL IMAGE VISIBILITY FIX */
+.project{
+  background:rgba(8,10,16,.10)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+.project .visual{
+  z-index:1!important;
+  position:absolute!important;
+  inset:0!important;
+  opacity:1!important;
+}
+.project .project-image{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  z-index:1!important;
+  opacity:1!important;
+  visibility:visible!important;
+  display:block!important;
+  filter:none!important;
+  transform:scale(1.035)!important;
+  mix-blend-mode:normal!important;
+}
+.project:hover .project-image{transform:scale(1.075)!important}
+.project .visual:after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:2!important;
+  background:linear-gradient(to bottom,rgba(4,5,10,0) 35%,rgba(4,5,10,.04) 48%,rgba(4,5,10,.28) 68%,rgba(4,5,10,.78) 100%)!important;
+}
+.project .shape,.project .shape:before{display:none!important}
+.project::after{display:none!important}
+.project .tag,.project h3,.project p,.project .more{z-index:5!important}
+@media(min-width:1001px){
+  .hero-art{transform:translateX(8%)!important}
+  .hero-art .o1{width:540px!important;height:540px!important}
+  .hero-art .o2{width:380px!important;height:380px!important}
+  .hero-art .o3{width:670px!important;height:220px!important}
+  .hero-art .core{width:190px!important;height:190px!important;border-radius:42px!important}
+  .hero-art .hero-profile-photo{border-radius:41px!important}
+}
+
 </style>
 </head>
 <body><div class="neon-ambient"></div>
