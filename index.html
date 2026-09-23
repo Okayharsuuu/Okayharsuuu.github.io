@@ -74,6 +74,24 @@
 .core{overflow:hidden;border-color:rgba(255,255,255,.18)!important;background:rgba(10,13,18,.12)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
 .hero-profile-photo{opacity:1!important;filter:saturate(.98) contrast(1.02)!important;}
 
+
+/* Final sizing + project image visibility */
+@media(min-width:1001px){
+  .hero-art{transform:translateX(5%);}
+  .hero-art .o1{width:500px;height:500px;}
+  .hero-art .o2{width:350px;height:350px;}
+  .hero-art .o3{width:620px;height:205px;}
+  .hero-art .core{width:170px;height:170px;border-radius:38px;}
+  .hero-art .hero-profile-photo{border-radius:37px;}
+}
+.project .visual{z-index:0!important;}
+.project .project-image{z-index:0!important;opacity:1!important;visibility:visible!important;display:block!important;mix-blend-mode:normal!important;filter:saturate(1.03) contrast(1.04)!important;transform:scale(1.025)!important;}
+.project:hover .project-image{transform:scale(1.075)!important;opacity:1!important;}
+.project .visual:after{z-index:1!important;background:linear-gradient(180deg,rgba(5,6,8,0) 0%,rgba(5,6,8,0) 42%,rgba(5,6,8,.16) 58%,rgba(5,6,8,.68) 100%)!important;}
+.project .shape{z-index:2!important;opacity:.32;}
+.project::after{z-index:1!important;opacity:.22!important;}
+.project .tag,.project h3,.project p,.project .more{z-index:3!important;}
+
 </style>
 </head>
 <body><div class="neon-ambient"></div>
