@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#050608;--panel:#0a0d12;--text:#eef1f5;--muted:#8b95a3;--line:rgba(255,255,255,.09);--cyan:#9b8cff;--violet:#c59bff;--lime:#ff78b8;--ease:cubic-bezier(.22,1,.36,1)}
-*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar,.scene::-webkit-scrollbar{display:none}body{overflow:hidden}button,a{font:inherit;color:inherit}a{text-decoration:none}button{border:0}
+*{box-sizing:border-box}html,body{margin:0;width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;scrollbar-width:none}html::-webkit-scrollbar,body::-webkit-scrollbar,.scene::-webkit-scrollbar{display:none}body{overflow:hidden}button,a{font:inherit;color:inherit}a{text-decoration:none}button{border:0}
 #canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}.noise{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
 #app{position:relative;z-index:3;width:100%;height:100vh}.nav{position:fixed;z-index:20;top:18px;left:22px;right:22px;height:64px;border:1px solid var(--line);background:rgba(6,8,12,.64);backdrop-filter:blur(18px);display:flex;align-items:center;padding:0 18px;border-radius:18px}.brand{background:transparent;display:flex;align-items:center;gap:11px;min-width:260px;cursor:pointer}.avatar{width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.15);display:grid;place-items:center;background:linear-gradient(145deg,#151b25,#090b0f);font-weight:800;letter-spacing:-.04em}.brand b{color:var(--text);font-size:14px;letter-spacing:.01em}.brand small{display:block;color:#697482;font:10px "DM Mono";letter-spacing:.12em;margin-top:2px}.navlinks{margin-left:auto;display:flex;gap:5px}.navlinks button{background:transparent;color:#78818e;padding:11px 15px;border-radius:12px;cursor:pointer;font-size:12px;letter-spacing:.08em;transition:.3s}.navlinks button:hover,.navlinks button.active{color:#fff;background:rgba(255,255,255,.06)}.status{margin-left:10px;border:1px solid rgba(255,120,184,.28);color:#ff78b8;padding:9px 12px;border-radius:99px;font:10px "DM Mono";letter-spacing:.08em}
 .scenes{position:relative;width:100%;height:100vh}.scene{position:absolute;inset:0;padding:110px 6vw 48px;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:none;opacity:0;visibility:hidden;transform:translate3d(7vw,0,0) scale(.985);transition:opacity .7s var(--ease),transform .9s var(--ease),visibility .7s}.scene.active{opacity:1;visibility:visible;transform:none}.scene.prev{transform:translate3d(-7vw,0,0) scale(.985)}
@@ -29,6 +29,12 @@
 .neon-ambient:before,.neon-ambient:after{content:"";position:absolute;border-radius:50%;filter:blur(95px);opacity:.16;mix-blend-mode:screen}
 .neon-ambient:before{width:42vw;height:42vw;left:48%;top:8%;background:#7165ff}
 .neon-ambient:after{width:32vw;height:32vw;right:-7%;bottom:8%;background:#ff62ae}
+
+/* V10 refinements */
+.project-card:hover,.project:hover,.stack-card:hover,.stack-item:hover,.tile:hover,.card:hover{
+  border-color:rgba(170,155,255,.72)!important;
+  box-shadow:0 14px 45px rgba(105,88,210,.14), inset 0 0 0 1px rgba(170,155,255,.18);
+}
 </style>
 </head>
 <body><div class="neon-ambient"></div>
@@ -129,6 +135,26 @@ const ambient=document.querySelector('.neon-ambient');
 addEventListener('pointermove',e=>{
   if(ambient) ambient.style.transform=`translate(${(e.clientX-innerWidth*.5)*.012}px,${(e.clientY-innerHeight*.5)*.012}px)`;
 },{passive:true});
+</script>
+
+<script>
+(function(){
+  const spot = document.querySelector('.blob');
+  if(!spot) return;
+  let raf = 0, tx = 0, ty = 0;
+  window.addEventListener('pointermove', function(e){
+    tx = e.clientX; ty = e.clientY;
+    spot.style.opacity = '1';
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function(){
+      spot.style.left = tx + 'px';
+      spot.style.top = ty + 'px';
+    });
+  }, {passive:true});
+  window.addEventListener('pointerleave', function(){
+    spot.style.opacity = '0';
+  });
+})();
 </script>
 </body>
 </html>
