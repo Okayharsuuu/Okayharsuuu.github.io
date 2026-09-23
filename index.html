@@ -60,6 +60,20 @@
 .detail-visual.project-detail-image{display:block;min-height:390px;background:#090b10}
 .detail-visual.project-detail-image img{width:100%;height:100%;min-height:390px;object-fit:cover;display:block;opacity:.9;filter:saturate(.94) contrast(1.03)}
 
+
+/* Final visual fixes */
+.project{background:rgba(8,10,16,.18)!important;}
+.project .visual{z-index:0!important;}
+.project .visual:after{background:linear-gradient(180deg,rgba(5,6,8,0) 0%,rgba(5,6,8,.04) 34%,rgba(5,6,8,.32) 62%,rgba(5,6,8,.78) 100%)!important;z-index:1;}
+.project .project-image{z-index:0!important;opacity:1!important;filter:saturate(.98) contrast(1.02)!important;transform:scale(1.01)!important;}
+.project:hover .project-image{transform:scale(1.045)!important;opacity:1!important;}
+.project .shape{z-index:2!important;}
+.project::after{z-index:1;opacity:.45;}
+.project .tag,.project h3,.project p,.project .more{z-index:3!important;}
+.core:before,.core:after,.core-mark{display:none!important;}
+.core{overflow:hidden;border-color:rgba(255,255,255,.18)!important;background:rgba(10,13,18,.12)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;}
+.hero-profile-photo{opacity:1!important;filter:saturate(.98) contrast(1.02)!important;}
+
 </style>
 </head>
 <body><div class="neon-ambient"></div>
@@ -83,7 +97,7 @@
       <p>I’m Aman Sharma, a Materials Engineering student at IIT Jodhpur working toward robotics and autonomous systems. I build and study machines across mechanisms, embedded systems, computer vision, control and real-world prototyping.</p>
       <div class="cta-row"><button class="cta primary" data-go="projects">Explore projects ↗</button><a class="cta" href="https://github.com/Okayharsuuu" target="_blank" rel="noopener"><svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.3c-3.1.7-3.8-1.3-3.8-1.3-.5-1.3-1.2-1.6-1.2-1.6-1-.7.1-.7.1-.7 1.1.1 1.7 1.1 1.7 1.1 1 .1 1.5-.9 1.5-.9.9-1.6 2.5-1.1 3.1-.8.1-.7.4-1.1.7-1.4-2.5-.3-5.1-1.2-5.1-5.5 0-1.2.4-2.2 1.1-3-.1-.3-.5-1.5.1-3.1 0 0 .9-.3 3.1 1.1a10.7 10.7 0 0 1 5.6 0c2.1-1.4 3-1.1 3-1.1.6 1.6.2 2.8.1 3.1.7.8 1.1 1.8 1.1 3 0 4.3-2.6 5.2-5.1 5.5.4.3.7.9.7 1.8v2.7c0 .3.2.7.8.6A12 12 0 0 0 12 .7Z"/></svg>GitHub ↗</a><a class="cta" href="https://www.linkedin.com/in/aman-sharma-iitj/" target="_blank" rel="noopener"><svg class="social-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.1 3.2A2.1 2.1 0 1 1 5 7.4a2.1 2.1 0 0 1 .1-4.2ZM3.3 8.9h3.6V20H3.3V8.9Zm5.8 0h3.4v1.5h.1c.5-.9 1.7-1.9 3.6-1.9 3.8 0 4.5 2.5 4.5 5.8V20h-3.6v-5.1c0-1.2 0-2.8-1.7-2.8s-1.9 1.3-1.9 2.7V20H9.1V8.9Z"/></svg>LinkedIn ↗</a></div>
     </div>
-    <div class="hero-art" aria-hidden="true"><div class="orbit o3"></div><div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit-dot d1"></div><div class="orbit-dot d2"></div><div class="core"><img class="hero-profile-photo" src="assets/profile.jpg" alt="Aman Sharma"><span class="core-mark">AS//01</span></div></div>
+    <div class="hero-art" aria-hidden="true"><div class="orbit o3"></div><div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit-dot d1"></div><div class="orbit-dot d2"></div><div class="core"><img class="hero-profile-photo" src="assets/profile.jpg" alt="Aman Sharma"></div></div>
   </div>
   <div class="home-extra">
     <div class="home-extra-head"><div><div class="eyebrow">/ what I work on</div><h2>From mechanism to machine.</h2></div><p>My work sits where mechanical design, electronics, software and autonomous behavior meet.</p></div>
