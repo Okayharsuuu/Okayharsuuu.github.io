@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aman Sharma — Robotics & Autonomous Systems</title>
+<meta name="description" content="Aman Sharma — Robotics, autonomous systems, computer vision and mechanical engineering portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050608; --panel:#0a0d12; --text:#eef1f5; --muted:#8b95a3;
+  --line:rgba(255,255,255,.09); --cyan:#65e6ff; --violet:#9d8cff; --lime:#c8ff73;
+  --ease:cubic-bezier(.22,1,.36,1); --mx:50vw; --my:50vh;
+}
+*{box-sizing:border-box} html,body{margin:0;width:100%;height:100%;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;overflow:hidden}
+body{cursor:none}
+button,a{font:inherit;color:inherit}
+a{text-decoration:none}
+#canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.noise{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
+.cursor{position:fixed;z-index:20;left:0;top:0;width:22px;height:22px;border:1px solid rgba(255,255,255,.7);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;mix-blend-mode:screen;transition:width .25s var(--ease),height .25s var(--ease),border-color .25s}
+.cursor:after{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 22px var(--cyan)}
+body.hover .cursor{width:48px;height:48px;border-color:rgba(101,230,255,.8)}
+body.hover .cursor:after{inset:15px}
+#app{position:relative;z-index:3;height:100%;width:100%}
+.nav{position:fixed;z-index:10;top:18px;left:22px;right:22px;height:64px;border:1px solid var(--line);background:rgba(6,8,12,.64);backdrop-filter:blur(18px);display:flex;align-items:center;padding:0 18px;border-radius:18px}
+.brand{display:flex;align-items:center;gap:11px;min-width:260px}
+.avatar{width:38px;height:38px;border-radius:11px;border:1px solid rgba(255,255,255,.15);display:grid;place-items:center;background:linear-gradient(145deg,#151b25,#090b0f);font-weight:800;letter-spacing:-.04em}
+.brand b{font-size:14px;letter-spacing:.01em}.brand small{display:block;color:#697482;font:10px "DM Mono";letter-spacing:.12em;margin-top:2px}
+.navlinks{margin-left:auto;display:flex;gap:5px}
+.navlinks button{border:0;background:transparent;color:#78818e;padding:11px 15px;border-radius:12px;cursor:none;font-size:12px;letter-spacing:.08em;transition:.3s}
+.navlinks button:hover,.navlinks button.active{color:#fff;background:rgba(255,255,255,.06)}
+.status{margin-left:10px;border:1px solid rgba(200,255,115,.25);color:#c8ff73;padding:9px 12px;border-radius:99px;font:10px "DM Mono";letter-spacing:.08em}
+.scenes{position:relative;height:100%;width:100%}
+.scene{position:absolute;inset:0;padding:110px 6vw 48px;opacity:0;visibility:hidden;transform:translate3d(7vw,0,0) scale(.985);transition:opacity .7s var(--ease),transform .9s var(--ease),visibility .7s}
+.scene.active{opacity:1;visibility:visible;transform:none}
+.scene.prev{transform:translate3d(-7vw,0,0) scale(.985)}
+.eyebrow{font:11px "DM Mono";letter-spacing:.22em;color:#788391;text-transform:uppercase}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;height:100%;gap:5vw}
+.hero h1{font-size:clamp(58px,9vw,144px);line-height:.83;letter-spacing:-.07em;margin:16px 0 28px;font-weight:800}
+.hero h1 span{display:block}
+.hero h1 .outline{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.42)}
+.hero p{max-width:650px;color:#a2abb7;font-size:17px;line-height:1.75;margin:0 0 30px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.cta{border:1px solid rgba(255,255,255,.14);padding:13px 17px;border-radius:13px;background:rgba(255,255,255,.04);cursor:none;transition:.35s}
+.cta.primary{background:#f2f4f5;color:#07090c;border-color:#fff}
+.cta:hover{transform:translateY(-3px);border-color:rgba(101,230,255,.6);box-shadow:0 15px 40px rgba(0,0,0,.3)}
+.hero-art{position:relative;height:min(600px,68vh);display:grid;place-items:center}
+.orbit{position:absolute;border:1px solid rgba(101,230,255,.14);border-radius:50%;transform:rotate(-19deg);box-shadow:0 0 80px rgba(101,230,255,.04) inset}
+.o1{width:410px;height:410px}.o2{width:285px;height:285px;transform:rotate(61deg)}.o3{width:520px;height:170px;transform:rotate(24deg)}
+.core{width:120px;height:120px;border:1px solid rgba(255,255,255,.24);border-radius:30px;display:grid;place-items:center;position:relative;background:rgba(10,13,18,.6);backdrop-filter:blur(10px);box-shadow:0 0 80px rgba(101,230,255,.11)}
+.core:before,.core:after{content:"";position:absolute;background:var(--cyan);box-shadow:0 0 20px var(--cyan)}
+.core:before{width:1px;height:170px}.core:after{height:1px;width:170px}
+.core-mark{font:20px "DM Mono";z-index:1}
+.orbit-dot{position:absolute;width:8px;height:8px;background:var(--lime);border-radius:50%;box-shadow:0 0 18px var(--lime)}
+.d1{top:10%;left:50%}.d2{right:8%;top:60%;background:var(--violet);box-shadow:0 0 18px var(--violet)}
+.scrollhint{position:absolute;bottom:35px;left:6vw;color:#626d79;font:10px "DM Mono";letter-spacing:.18em}
+.scrollhint span{display:inline-block;width:35px;height:1px;background:#4d5662;vertical-align:middle;margin-right:9px}
+.section-head{display:flex;justify-content:space-between;align-items:end;margin-bottom:26px}
+.section-head h2{font-size:clamp(36px,5vw,72px);line-height:.95;letter-spacing:-.055em;margin:8px 0 0}
+.section-head p{color:#77818e;max-width:420px;line-height:1.6;font-size:13px}
+.project-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;height:calc(100% - 135px)}
+.project{position:relative;border:1px solid var(--line);border-radius:22px;overflow:hidden;background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));padding:22px;display:flex;flex-direction:column;justify-content:flex-end;min-height:340px;transform-style:preserve-3d;transition:transform .25s ease,border-color .3s,background .3s;cursor:none}
+.project:hover{border-color:rgba(101,230,255,.4);background:rgba(13,18,25,.82)}
+.project:before{content:"";position:absolute;inset:0;background:radial-gradient(300px circle at var(--px,50%) var(--py,50%),rgba(101,230,255,.13),transparent 55%);opacity:0;transition:.3s}
+.project:hover:before{opacity:1}
+.visual{position:absolute;inset:0 0 43%;overflow:hidden}
+.visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 25%,rgba(5,6,8,.82))}
+.visual .shape{position:absolute;left:50%;top:50%;width:150px;height:150px;border:1px solid rgba(101,230,255,.35);transform:translate(-50%,-50%) rotate(35deg);box-shadow:0 0 70px rgba(101,230,255,.1)}
+.visual .shape:before{content:"";position:absolute;inset:24px;border:1px dashed rgba(157,140,255,.55)}
+.v2 .shape{border-radius:50%;transform:translate(-50%,-50%);width:180px;height:180px}.v2 .shape:before{border-radius:50%}
+.v3 .shape{width:210px;height:90px;transform:translate(-50%,-50%) skewX(-15deg);border-color:rgba(200,255,115,.38)}
+.v4 .shape{width:130px;height:130px;border-radius:25px;transform:translate(-50%,-50%) rotate(45deg);border-color:rgba(157,140,255,.45)}
+.project .tag{position:relative;z-index:1;font:10px "DM Mono";letter-spacing:.08em;color:var(--cyan);margin-bottom:8px}
+.project h3{position:relative;z-index:1;font-size:19px;line-height:1.15;margin:0 0 9px;letter-spacing:-.03em}
+.project p{position:relative;z-index:1;color:#87919e;font-size:12px;line-height:1.55;margin:0}
+.project .more{position:relative;z-index:1;margin-top:15px;color:#e7ebef;font-size:11px}
+.split{display:grid;grid-template-columns:.72fr 1.28fr;gap:30px;height:calc(100% - 125px)}
+.profile-card{border:1px solid var(--line);border-radius:25px;padding:30px;background:rgba(255,255,255,.035);position:relative;overflow:hidden}
+.profile-card:before{content:"";position:absolute;width:280px;height:280px;border-radius:50%;background:rgba(101,230,255,.07);filter:blur(50px);right:-120px;top:-100px}
+.profile-avatar{width:100px;height:100px;border-radius:26px;border:1px solid rgba(255,255,255,.14);display:grid;place-items:center;font-size:35px;font-weight:800;background:linear-gradient(145deg,#17202b,#090b0e);margin-bottom:25px}
+.profile-card h3{font-size:28px;margin:0 0 5px}.profile-card .role{font:11px "DM Mono";color:var(--cyan);letter-spacing:.1em}
+.profile-card p{color:#89939f;line-height:1.7;font-size:13px}
+.timeline{position:relative;padding-left:28px;overflow:auto;padding-right:10px}
+.timeline:before{content:"";position:absolute;left:6px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--cyan),rgba(255,255,255,.06))}
+.event{position:relative;padding:0 0 30px}.event:before{content:"";position:absolute;left:-26px;top:5px;width:9px;height:9px;border-radius:50%;background:#0a0d12;border:1px solid var(--cyan);box-shadow:0 0 14px rgba(101,230,255,.5)}
+.event .date{font:10px "DM Mono";color:#697482;letter-spacing:.08em}.event h3{margin:5px 0 7px;font-size:20px}.event p{margin:0;color:#89939f;font-size:13px;line-height:1.65;max-width:700px}
+.stack{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}
+.chip{border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:#a8b0ba;background:rgba(255,255,255,.025);font:11px "DM Mono"}
+
+.stack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;height:calc(100% - 125px);overflow:auto;padding:2px 4px 20px 0;scrollbar-width:thin}
+.stack-card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018));padding:20px;min-height:170px;position:relative;overflow:hidden;transition:transform .3s var(--ease),border-color .3s,background .3s}
+.stack-card:before{content:"";position:absolute;inset:auto -40px -70px auto;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(101,230,255,.10),transparent 65%);pointer-events:none}
+.stack-card:hover{transform:translateY(-4px);border-color:rgba(101,230,255,.34);background:rgba(255,255,255,.055)}
+.stack-icon{width:34px;height:34px;border:1px solid rgba(255,255,255,.12);border-radius:10px;display:grid;place-items:center;color:var(--cyan);font:14px "DM Mono";margin-bottom:14px;background:rgba(0,0,0,.18)}
+.stack-card h3{margin:0 0 14px;font-size:16px;letter-spacing:-.02em}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chips span{border:1px solid rgba(255,255,255,.10);border-radius:9px;padding:7px 9px;color:#aab2bc;background:rgba(255,255,255,.028);font:10px "DM Mono";white-space:nowrap}
+.project{cursor:none}
+.detail-page{min-height:100vh;background:var(--bg);color:var(--text);font-family:Manrope,system-ui,sans-serif;overflow-x:hidden}
+.detail-page .detail-wrap{position:relative;z-index:2;max-width:1180px;margin:auto;padding:110px 6vw 80px}
+.back-btn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);background:rgba(255,255,255,.04);padding:11px 15px;border-radius:12px;color:#cbd2da;cursor:pointer;transition:.3s}
+.back-btn:hover{border-color:rgba(101,230,255,.5);transform:translateX(-3px)}
+.detail-kicker{font:11px "DM Mono";letter-spacing:.18em;color:var(--cyan);text-transform:uppercase;margin-top:50px}
+.detail-page h1{font-size:clamp(48px,8vw,104px);line-height:.9;letter-spacing:-.065em;margin:15px 0 24px;max-width:900px}
+.detail-intro{max-width:760px;color:#9aa4b0;font-size:17px;line-height:1.8}
+.detail-hero{margin:45px 0;border:1px solid var(--line);border-radius:28px;min-height:360px;background:radial-gradient(circle at 50% 40%,rgba(101,230,255,.10),transparent 42%),linear-gradient(145deg,#10161e,#07090d);display:grid;place-items:center;overflow:hidden;position:relative}
+.detail-hero .hero-symbol{width:180px;height:180px;border:1px solid rgba(101,230,255,.5);box-shadow:0 0 100px rgba(101,230,255,.12);transform:rotate(45deg);position:relative}
+.detail-hero .hero-symbol:before{content:"";position:absolute;inset:28px;border:1px dashed rgba(157,140,255,.65)}
+.detail-hero .hero-symbol:after{content:"";position:absolute;left:50%;top:-120px;width:1px;height:420px;background:rgba(101,230,255,.25);transform:translateX(-50%) rotate(-45deg)}
+.detail-content{display:grid;grid-template-columns:1.5fr .7fr;gap:45px}
+.detail-section{border-top:1px solid var(--line);padding-top:22px;margin-bottom:35px}
+.detail-section h2{font-size:24px;margin:0 0 12px}.detail-section p{color:#929ca8;line-height:1.8;margin:0}.detail-section ul{color:#929ca8;line-height:1.8;padding-left:20px}.detail-side{border:1px solid var(--line);border-radius:22px;background:rgba(255,255,255,.025);padding:22px;height:max-content}.detail-side h3{margin:0 0 16px;font-size:14px}.detail-side .chip{display:inline-block;margin:0 6px 7px 0;padding:8px 10px}
+@media(max-width:900px){.stack-grid{grid-template-columns:repeat(2,1fr)}.detail-content{grid-template-columns:1fr}}
+@media(max-width:600px){.stack-grid{grid-template-columns:1fr}.stack-card{min-height:150px}}
+.contact-wrap{height:100%;display:grid;place-items:center;text-align:center}
+.contact-wrap h2{font-size:clamp(55px,9vw,130px);line-height:.85;letter-spacing:-.07em;margin:12px 0 22px}
+.contact-wrap p{color:#8d97a4;max-width:560px;line-height:1.7;margin:0 auto 26px}
+.links{display:flex;justify-content:center;gap:9px;flex-wrap:wrap}
+.side-index{position:fixed;z-index:9;right:25px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px}
+.side-index button{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:#48515c;cursor:none;transition:.3s}
+.side-index button.active{height:28px;border-radius:99px;background:var(--cyan);box-shadow:0 0 15px rgba(101,230,255,.55)}
+@media(max-width:1000px){
+ .brand{min-width:auto}.brand div{display:none}.status{display:none}.navlinks button{padding:10px 8px;font-size:10px}
+ .hero{grid-template-columns:1fr}.hero-art{display:none}.hero h1{font-size:clamp(60px,16vw,110px)}
+ .project-grid{grid-template-columns:repeat(2,1fr);overflow:auto}.project{min-height:300px}
+ .split{grid-template-columns:1fr;overflow:auto}.profile-card{min-height:260px}.timeline{overflow:visible}
+}
+@media(max-width:650px){
+ body{cursor:auto}.cursor{display:none}.nav{left:10px;right:10px;top:10px;height:58px;padding:0 10px}.navlinks{gap:0}.navlinks button{font-size:9px;padding:8px 6px}.status{display:none}
+ .scene{padding:92px 20px 30px}.section-head{display:block}.section-head p{margin-top:12px}.project-grid{grid-template-columns:1fr;height:calc(100% - 150px);padding-bottom:30px}.project{min-height:270px}
+ .scrollhint,.side-index{display:none}.hero p{font-size:14px}.cta{font-size:12px}
+ .contact-wrap{text-align:left;place-items:center start}.contact-wrap h2{font-size:20vw}.links{justify-content:flex-start}
+}
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas><div class="noise"></div><div class="cursor"></div>
+<div id="app">
+<header class="nav">
+  <a class="brand" href="#home" data-go="home">
+    <div class="avatar">AS</div><div><b>Aman Sharma</b><small>ROBOTICS · IIT JODHPUR</small></div>
+  </a>
+  <nav class="navlinks">
+    <button data-go="home">Home</button><button data-go="projects">Projects</button><button data-go="journey">Journey</button><button data-go="stack">Stack</button><button data-go="contact">Contact</button>
+  </nav>
+  <div class="status">● OPEN TO ROBOTICS</div>
+</header>
+
+<main class="scenes">
+<section class="scene active" id="home" data-name="home">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">/ robotics & autonomous systems</div>
+      <h1><span>I build</span><span class="outline">robots.</span></h1>
+      <p>I’m Aman Sharma, a Materials Engineering student at IIT Jodhpur exploring the intersection of mechanisms, embedded systems, computer vision and autonomous machines.</p>
+      <div class="cta-row">
+        <button class="cta primary" data-go="projects">Explore projects ↗</button>
+        <a class="cta" href="https://github.com/Okayharsuuu" target="_blank">GitHub ↗</a>
+        <a class="cta" href="https://www.linkedin.com/in/aman-sharma-iitj/" target="_blank">LinkedIn ↗</a>
+      </div>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="orbit o3"></div><div class="orbit o1"></div><div class="orbit o2"></div>
+      <div class="orbit-dot d1"></div><div class="orbit-dot d2"></div>
+      <div class="core"><span class="core-mark">AS//01</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="projects" data-name="projects">
+  <div class="section-head"><div><div class="eyebrow">/ selected work</div><h2>Things I’ve built.</h2></div><p>Each card opens a focused view. No generic wall of projects — just the system, the problem and what I worked on.</p></div>
+  <div class="project-grid">
+    <article class="project" data-project="drone"><div class="visual v1"><div class="shape"></div></div><div class="tag">AERIAL ROBOTICS · COMPUTER VISION</div><h3>VR Target-Tracking Quadcopter</h3><p>Human detection and tracking pipeline with OrangeCube+, SIYI MK15 and vision-based target interaction.</p><div class="more">View system ↗</div></article>
+    <article class="project" data-project="missile"><div class="visual v2"><div class="shape"></div></div><div class="tag">GUIDANCE · CONTROL</div><h3>Not Rocket Science</h3><p>Missile interception and guidance study combining MATLAB/Simulink, ArUco tracking and a 2-axis gimbal.</p><div class="more">View system ↗</div></article>
+    <article class="project" data-project="gps"><div class="visual v3"><div class="shape"></div></div><div class="tag">IOT · EMBEDDED</div><h3>Cycle GPS Tracker</h3><p>A practical tracking concept for locating parked cycles with real-time coordinates and offline caching.</p><div class="more">View system ↗</div></article>
+    <article class="project" data-project="robo"><div class="visual v4"><div class="shape"></div></div><div class="tag">MECHANISMS · ROBOTICS</div><h3>Robosoccer — Prometeo</h3><p>Built manually controlled bots from scratch for IIT Jodhpur’s Prometeo robotics competition.</p><div class="more">View system ↗</div></article>
+  </div>
+</section>
+
+<section class="scene" id="journey" data-name="journey">
+  <div class="section-head"><div><div class="eyebrow">/ path so far</div><h2>Journey.</h2></div><p>Materials engineering is the base. Robotics is where I’m applying it — through mechanisms, controls and real hardware.</p></div>
+  <div class="split">
+    <aside class="profile-card"><div class="profile-avatar">AS</div><h3>Aman Sharma</h3><div class="role">ROBOTICS · MECHATRONICS · SYSTEMS</div><p>I like taking a machine from an idea to something that actually moves: CAD → electronics → code → testing.</p></aside>
+    <div class="timeline">
+      <div class="event"><div class="date">2026 — PRESENT</div><h3>Robotics & Systems Engineering</h3><p>Building practical robotics projects around autonomous systems, computer vision, embedded control and mechanical mechanisms.</p></div>
+      <div class="event"><div class="date">2026</div><h3>ViTachyon Robotics · IIIT Delhi</h3><p>Robotics & Systems Engineering internship work, exploring robot perception and system-level integration.</p></div>
+      <div class="event"><div class="date">2026</div><h3>ISRO IROC-U</h3><p>Worked on an autonomous drone concept for a GPS-denied environment, including docking, ArUco-based perception and debugging.</p></div>
+      <div class="event"><div class="date">2025 — PRESENT</div><h3>IIT Jodhpur · Materials Engineering</h3><p>B.Tech foundation spanning materials, mechanics and engineering design while moving deeper into robotics.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="stack" data-name="stack">
+  <div class="section-head"><div><div class="eyebrow">/ technical stack</div><h2>Stack.</h2></div><p>The tools and domains I use to move from mechanical ideas to working robotic systems.</p></div>
+  <div class="stack-grid">
+    <div class="stack-card"><div class="stack-icon">⌘</div><h3>Robotics & Mechatronics</h3><div class="chips"><span>Robotics</span><span>Mechatronics</span><span>Mechanisms</span><span>Motion Control</span><span>Haptics</span><span>Automation</span></div></div>
+    <div class="stack-card"><div class="stack-icon">&lt;/&gt;</div><h3>Programming</h3><div class="chips"><span>C</span><span>C++</span><span>Python</span><span>MATLAB</span><span>Embedded C</span><span>Arduino IDE</span></div></div>
+    <div class="stack-card"><div class="stack-icon">◫</div><h3>Operating Systems</h3><div class="chips"><span>Ubuntu Linux</span><span>Windows</span><span>Raspberry Pi OS</span></div></div>
+    <div class="stack-card"><div class="stack-icon">◈</div><h3>Computer Vision</h3><div class="chips"><span>OpenCV</span><span>ArUco</span><span>Object Detection</span><span>Target Tracking</span><span>Camera Systems</span><span>Pose Estimation</span></div></div>
+    <div class="stack-card"><div class="stack-icon">◌</div><h3>Control & Simulation</h3><div class="chips"><span>MATLAB / Simulink</span><span>Control Loops</span><span>PID</span><span>Kinematics</span><span>Robot Simulation</span><span>State Estimation</span></div></div>
+    <div class="stack-card"><div class="stack-icon">◇</div><h3>Frameworks & Robotics Tools</h3><div class="chips"><span>ROS 2</span><span>PX4</span><span>Genesis</span><span>QGroundControl</span><span>PySerial</span><span>UDP</span></div></div>
+    <div class="stack-card"><div class="stack-icon">▱</div><h3>Tools & Software</h3><div class="chips"><span>SolidWorks</span><span>Fusion 360</span><span>Git</span><span>GitHub</span><span>VS Code</span><span>3D Printing</span><span>Laser Cutting</span></div></div>
+    <div class="stack-card"><div class="stack-icon">⌁</div><h3>Hardware & Embedded Systems</h3><div class="chips"><span>Arduino</span><span>ESP32</span><span>Raspberry Pi</span><span>OrangeCube+</span><span>Flight Controllers</span><span>Motors & ESCs</span><span>IMU Sensors</span><span>GPS</span><span>Camera Sensors</span></div></div>
+  </div>
+</section>
+
+<section class="scene" id="contact" data-name="contact">
+  <div class="contact-wrap">
+    <div>
+      <div class="eyebrow">/ let’s build something</div>
+      <h2>Have a robot<br>in mind?</h2>
+      <p>For robotics projects, collaborations, internships or just a technical conversation, reach out.</p>
+      <div class="links">
+        <a class="cta primary" href="mailto:amansharma44p@gmail.com">Email me ↗</a>
+        <a class="cta" href="https://github.com/Okayharsuuu" target="_blank">GitHub ↗</a>
+        <a class="cta" href="https://www.linkedin.com/in/aman-sharma-iitj/" target="_blank">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+<div class="side-index">
+  <button data-go="home" class="active"></button><button data-go="projects"></button><button data-go="journey"></button><button data-go="stack"></button><button data-go="contact"></button>
+</div>
+</div>
+
+<script>
+const scenes=[...document.querySelectorAll('.scene')];
+const nav=[...document.querySelectorAll('[data-go]')];
+const names=scenes.map(s=>s.id);
+let current=0, locked=false;
+function go(id, push=true){
+  const next=names.indexOf(id); if(next<0||next===current)return;
+  scenes.forEach((s,i)=>{s.classList.toggle('active',i===next);s.classList.toggle('prev',i<next);});
+  nav.forEach(n=>n.classList.toggle('active',n.dataset.go===id));
+  current=next;
+  if(push) history.replaceState(null,'','#'+id);
+}
+nav.forEach(n=>n.addEventListener('click',e=>{e.preventDefault();go(n.dataset.go)}));
+function move(dir){if(locked)return;const n=Math.max(0,Math.min(names.length-1,current+dir));if(n!==current){locked=true;go(names[n]);setTimeout(()=>locked=false,850)}}
+window.addEventListener('keydown',e=>{if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){e.preventDefault();move(1)} if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();move(-1)} });
+if(location.hash&&names.includes(location.hash.slice(1)))go(location.hash.slice(1),false);
+
+const cursor=document.querySelector('.cursor');
+let tx=innerWidth/2,ty=innerHeight/2,cx=tx,cy=ty;
+window.addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;document.documentElement.style.setProperty('--mx',tx+'px');document.documentElement.style.setProperty('--my',ty+'px')});
+function cursorLoop(){cx+=(tx-cx)*.18;cy+=(ty-cy)*.18;cursor.style.transform=`translate3d(${cx}px,${cy}px,0) translate(-50%,-50%)`;requestAnimationFrame(cursorLoop)} cursorLoop();
+document.querySelectorAll('a,button,.project').forEach(el=>{el.addEventListener('mouseenter',()=>document.body.classList.add('hover'));el.addEventListener('mouseleave',()=>document.body.classList.remove('hover'))});
+
+document.querySelectorAll('.project').forEach(card=>{
+ card.addEventListener('pointermove',e=>{const r=card.getBoundingClientRect();const x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(900px) rotateX(${-y*5}deg) rotateY(${x*6}deg) translateY(-4px)`;card.style.setProperty('--px',(x+.5)*100+'%');card.style.setProperty('--py',(y+.5)*100+'%')});
+ card.addEventListener('pointerleave',()=>card.style.transform='');
+});
+const projectPages={
+  drone:'project-drone.html',
+  missile:'project-missile.html',
+  gps:'project-gps.html',
+  robo:'project-robosoccer.html'
+};
+document.querySelectorAll('.project').forEach(c=>c.addEventListener('click',()=>{
+  window.location.href=projectPages[c.dataset.project];
+}));
+
+// Interactive constellation: nodes drift, connect nearby, and gently react to the pointer.
+const cvs=document.getElementById('canvas'),ctx=cvs.getContext('2d');let W,H,dpr,nodes=[];
+function resize(){W=innerWidth;H=innerHeight;dpr=Math.min(devicePixelRatio||1,2);cvs.width=W*dpr;cvs.height=H*dpr;cvs.style.width=W+'px';cvs.style.height=H+'px';ctx.setTransform(dpr,0,0,dpr,0,0);nodes=[];const count=Math.min(105,Math.floor(W*H/15000));for(let i=0;i<count;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,r:Math.random()*1.5+.5,p:Math.random()*6.28})}
+resize();addEventListener('resize',resize);
+let px=W/2,py=H/2;
+addEventListener('pointermove',e=>{px=e.clientX;py=e.clientY});
+function draw(t){
+ ctx.clearRect(0,0,W,H);
+ const glow=ctx.createRadialGradient(px,py,0,px,py,360);glow.addColorStop(0,'rgba(101,230,255,.09)');glow.addColorStop(1,'rgba(101,230,255,0)');ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
+ for(const p of nodes){
+   const dx=px-p.x,dy=py-p.y,d=Math.hypot(dx,dy); if(d<180){p.vx+=dx/d*.003;p.vy+=dy/d*.003}
+   p.vx*=.998;p.vy*=.998;p.x+=p.vx;p.y+=p.vy;
+   if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+ }
+ for(let i=0;i<nodes.length;i++)for(let j=i+1;j<nodes.length;j++){const a=nodes[i],b=nodes[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);if(d<125){ctx.strokeStyle=`rgba(110,145,190,${.09*(1-d/125)})`;ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}
+ for(const p of nodes){const near=Math.hypot(px-p.x,py-p.y);ctx.fillStyle=near<170?'rgba(101,230,255,.75)':'rgba(157,140,255,.48)';ctx.beginPath();ctx.arc(p.x,p.y,p.r+(near<170?1:0),0,Math.PI*2);ctx.fill()}
+ requestAnimationFrame(draw)
+}requestAnimationFrame(draw);
+</script>
+</body>
+</html>
