@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Aman Sharma — Robotics & Autonomous Systems portfolio">
+<title>Aman Sharma — Robotics & Autonomous Systems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070909;--bg2:#0b0f0f;--card:#101515;--card2:#141b1a;
+  --text:#edf4ef;--muted:#94a19c;--line:#202b28;
+  --accent:#b8ff64;--accent2:#77e6c2;--max:1180px;
+  --shadow:0 24px 70px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:
+ radial-gradient(circle at 80% 8%,rgba(184,255,100,.075),transparent 27%),
+ radial-gradient(circle at 10% 45%,rgba(119,230,194,.045),transparent 25%),
+ var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;line-height:1.6}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+.nav{position:fixed;z-index:50;top:0;left:0;right:0;border-bottom:1px solid rgba(255,255,255,.06);
+ background:rgba(7,9,9,.72);backdrop-filter:blur(16px)}
+.navin{height:70px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:"Space Grotesk";font-weight:700;letter-spacing:-.03em;font-size:1.05rem}
+.logo b{color:var(--accent)}
+.navlinks{display:flex;gap:26px;color:#a9b4af;font-size:.88rem}
+.navlinks a:hover{color:var(--text)}
+.navright{display:flex;align-items:center;gap:10px}
+.iconbtn,.menu{height:38px;width:38px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--text);cursor:pointer}
+.menu{display:none}
+.hero{min-height:100vh;display:grid;align-items:center;padding:125px 0 80px}
+.heroGrid{display:grid;grid-template-columns:1.12fr .88fr;gap:70px;align-items:center}
+.kicker{font:500 .78rem "DM Mono";color:var(--accent);letter-spacing:.12em;text-transform:uppercase}
+h1{font:700 clamp(3.7rem,8vw,7.7rem)/.88 "Space Grotesk";letter-spacing:-.075em;margin:20px 0 28px}
+h1 em{font-style:normal;color:var(--accent)}
+.heroText{font-size:1.15rem;color:var(--muted);max-width:680px}
+.cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{border:1px solid var(--line);background:var(--card);padding:12px 17px;border-radius:11px;font-weight:700;font-size:.9rem;transition:.2s}
+.btn:hover{transform:translateY(-2px);border-color:#40504b}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#071006}
+.meta{display:flex;gap:22px;flex-wrap:wrap;margin-top:32px;color:#73817b;font-size:.78rem}
+.meta span:before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-right:8px}
+.heroVisual{position:relative;min-height:510px;border:1px solid var(--line);border-radius:28px;overflow:hidden;background:
+ linear-gradient(145deg,rgba(184,255,100,.08),transparent 45%),#0b1110;box-shadow:var(--shadow)}
+.gridbg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:40px 40px;mask-image:linear-gradient(to bottom,black,transparent)}
+.orbit{position:absolute;width:330px;height:330px;border:1px solid #395044;border-radius:50%;top:80px;left:50%;transform:translateX(-50%) rotate(-18deg)}
+.orbit:before,.orbit:after{content:"";position:absolute;inset:35px;border:1px dashed #2c3b35;border-radius:50%}
+.orbit:after{inset:105px;border:1px solid #405c4e}
+.cross{position:absolute;top:50%;left:50%;width:250px;height:250px;transform:translate(-50%,-50%) rotate(45deg);border:1px solid #26362f}
+.cross:before,.cross:after{content:"";position:absolute;background:#33463d}
+.cross:before{height:1px;width:100%;top:50%}.cross:after{width:1px;height:100%;left:50%}
+.bot{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:78px;border:1px solid #7c9b89;border-radius:18px;background:#111a16;box-shadow:0 0 60px rgba(184,255,100,.08)}
+.bot:before{content:"";position:absolute;left:50%;top:-22px;transform:translateX(-50%);width:45px;height:25px;border:1px solid #7c9b89;border-bottom:0;border-radius:18px 18px 0 0}
+.bot:after{content:"";position:absolute;left:25px;right:25px;bottom:-13px;height:7px;border-left:1px solid #7c9b89;border-right:1px solid #7c9b89}
+.dot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 20px var(--accent);top:18%;right:18%}
+.telemetry{position:absolute;bottom:20px;left:20px;right:20px;display:flex;justify-content:space-between;gap:12px;padding:13px 15px;border:1px solid var(--line);border-radius:13px;background:rgba(8,12,11,.82);backdrop-filter:blur(8px);font:500 .7rem "DM Mono";color:#7f8e87}
+section{padding:110px 0;border-top:1px solid rgba(255,255,255,.055)}
+.sectionTop{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:42px}
+.eyebrow{font:500 .7rem "DM Mono";color:var(--accent);letter-spacing:.14em;text-transform:uppercase}
+h2{font:600 clamp(2rem,4vw,3.4rem)/1 "Space Grotesk";letter-spacing:-.055em;margin:8px 0 0}
+.sectionTop p{max-width:480px;color:var(--muted);margin:0}
+.aboutGrid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{border:1px solid var(--line);background:linear-gradient(145deg,var(--card2),var(--card));border-radius:18px;padding:28px}
+.panel p{color:var(--muted)}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:25px}
+.stat{border:1px solid var(--line);padding:18px;border-radius:13px;background:#0d1211}
+.stat strong{display:block;font:600 1.65rem "Space Grotesk";color:var(--text)}.stat span{color:#73817b;font-size:.75rem}
+.projects{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.project{min-height:350px;position:relative;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:20px;background:var(--card)}
+.projectVisual{height:180px;position:relative;background:
+ radial-gradient(circle at 70% 40%,rgba(184,255,100,.11),transparent 24%),
+ linear-gradient(135deg,#111916,#0a0d0c)}
+.projectVisual .label{position:absolute;top:16px;left:16px;font:500 .67rem "DM Mono";color:#9cac9f;border:1px solid #2c3934;padding:6px 8px;border-radius:7px}
+.visualLines{position:absolute;inset:0;background-image:linear-gradient(120deg,transparent 48%,rgba(184,255,100,.22) 49%,transparent 50%),linear-gradient(30deg,transparent 48%,rgba(119,230,194,.15) 49%,transparent 50%);background-size:80px 80px}
+.projectBody{padding:23px;display:flex;flex-direction:column;flex:1}
+.project h3{font:600 1.35rem "Space Grotesk";margin:0 0 8px;letter-spacing:-.025em}
+.project p{color:var(--muted);font-size:.9rem;margin:0 0 18px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
+.tag{font:500 .68rem "DM Mono";color:#aab7b1;border:1px solid var(--line);border-radius:999px;padding:6px 8px}
+.projectlink{position:absolute;right:18px;top:145px;width:42px;height:42px;border-radius:50%;background:var(--accent);color:#071006;display:grid;place-items:center;font-weight:800}
+.journey{display:grid;gap:0}
+.jitem{display:grid;grid-template-columns:180px 1fr;gap:30px;padding:28px 0;border-bottom:1px solid var(--line)}
+.jdate{font:500 .7rem "DM Mono";color:var(--accent)}
+.jitem h3{font:600 1.15rem "Space Grotesk";margin:0 0 3px}.jorg{color:#718079;font-size:.85rem;margin-bottom:10px}
+.jitem p{color:var(--muted);margin:0;max-width:720px;font-size:.9rem}
+.skillgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.skill{padding:14px 15px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:#bdc8c3;font-size:.84rem}
+.skill small{display:block;color:#617069;font:500 .6rem "DM Mono";margin-bottom:5px;text-transform:uppercase}
+.contactBox{display:grid;grid-template-columns:1.2fr .8fr;gap:20px}
+.contactMain{padding:38px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,rgba(184,255,100,.08),var(--card))}
+.contactMain h3{font:600 clamp(2rem,5vw,4rem) "Space Grotesk";line-height:.98;letter-spacing:-.055em;margin:10px 0 18px}
+.contactMain p{color:var(--muted);max-width:570px}
+.contactLinks{display:grid;gap:10px}.contactLink{border:1px solid var(--line);background:var(--card);border-radius:13px;padding:17px;color:#9ca9a3}
+.contactLink strong{display:block;color:var(--text);font-size:.9rem}.contactLink span{font-size:.75rem}
+footer{padding:30px 0 45px;color:#59665f;font:500 .7rem "DM Mono";display:flex;justify-content:space-between}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}.reveal.show{opacity:1;transform:none}
+@media(max-width:850px){
+ .navlinks{display:none}.menu{display:block}.heroGrid,.aboutGrid,.contactBox{grid-template-columns:1fr}.heroVisual{min-height:430px}
+ .projects{grid-template-columns:1fr}.skillgrid{grid-template-columns:repeat(2,1fr)}.jitem{grid-template-columns:1fr;gap:8px}.sectionTop{display:block}.sectionTop p{margin-top:14px}
+}
+@media(max-width:520px){.wrap{width:min(var(--max),calc(100% - 28px))}.hero{padding-top:105px}h1{font-size:3.5rem}.statrow{grid-template-columns:1fr}.skillgrid{grid-template-columns:1fr}.heroVisual{min-height:360px}.orbit{width:245px;height:245px}}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="wrap navin">
+    <a class="logo" href="#">AMAN<span>.</span></a>
+    <div class="navlinks">
+      <a href="#about">About</a><a href="#work">Work</a><a href="#journey">Journey</a><a href="#skills">Skills</a><a href="#contact">Contact</a>
+    </div>
+    <div class="navright"><button class="iconbtn" id="topBtn" aria-label="Back to top">↗</button><button class="menu" id="menuBtn">☰</button></div>
+  </div>
+</nav>
+
+<header class="hero">
+<div class="wrap heroGrid">
+  <div class="reveal">
+    <div class="kicker">Robotics · Autonomous Systems · IIT Jodhpur</div>
+    <h1>I build robots<br>that <em>move.</em></h1>
+    <p class="heroText">I'm Aman Sharma — a Materials Engineering student exploring robotics, autonomous systems, computer vision, control and hands-on prototyping.</p>
+    <div class="cta">
+      <a class="btn primary" href="#work">Explore my work ↓</a>
+      <a class="btn" href="https://github.com/Okayharsuuu" target="_blank">GitHub ↗</a>
+      <a class="btn" href="https://www.linkedin.com/in/aman-sharma-iitj/" target="_blank">LinkedIn ↗</a>
+    </div>
+    <div class="meta"><span>IIT Jodhpur</span><span>Robotics Society</span><span>Building & learning</span></div>
+  </div>
+  <div class="heroVisual reveal">
+    <div class="gridbg"></div><div class="orbit"></div><div class="cross"></div><div class="bot"></div><div class="dot"></div>
+    <div class="telemetry"><span>SYS / ONLINE</span><span>ROS · CV · CTRL</span><span>26.9° N / 73.0° E</span></div>
+  </div>
+</div>
+</header>
+
+<section id="about"><div class="wrap">
+  <div class="sectionTop reveal"><div><div class="eyebrow">01 — About</div><h2>Engineering across<br>hardware & software.</h2></div><p>I like building complete systems: mechanisms, electronics, code, sensing and control — then debugging the parts that refuse to cooperate.</p></div>
+  <div class="aboutGrid">
+    <div class="panel reveal"><p>I'm pursuing a B.Tech in Materials Engineering at IIT Jodhpur. My current interests are robotics, autonomous systems, computer vision, UAVs, control and simulation.</p><p>My approach is hands-on: start with a physical problem, model what is needed, prototype quickly, test, debug and iterate.</p></div>
+    <div class="panel reveal"><strong>What I'm exploring</strong><div class="statrow"><div class="stat"><strong>Robotics</strong><span>Mechanisms & systems</span></div><div class="stat"><strong>Vision</strong><span>Detection & tracking</span></div><div class="stat"><strong>Control</strong><span>Real-time systems</span></div></div></div>
+  </div>
+</div></section>
+
+<section id="work"><div class="wrap">
+  <div class="sectionTop reveal"><div><div class="eyebrow">02 — Selected work</div><h2>Projects & systems.</h2></div><p>A selection of projects spanning UAVs, guidance, computer vision, GPS tracking and competitive robotics.</p></div>
+  <div class="projects">
+    <article class="project reveal"><div class="projectVisual"><div class="visualLines"></div><span class="label">UAV / VISION</span></div><a class="projectlink" href="#" onclick="openProject('quad');return false;">↗</a><div class="projectBody"><h3>VR Target-Tracking Quadcopter</h3><p>Ongoing self-learning project using OrangeCube+ and SIYI MK15, with an onboard vision pipeline for human detection, tracking and target-outline extraction for a dynamic third-person VR view.</p><div class="tags"><span class="tag">OrangeCube+</span><span class="tag">Computer Vision</span><span class="tag">UAV</span><span class="tag">VR</span></div></div></article>
+    <article class="project reveal"><div class="projectVisual"><div class="visualLines"></div><span class="label">GUIDANCE / CONTROL</span></div><a class="projectlink" href="#" onclick="openProject('missile');return false;">↗</a><div class="projectBody"><h3>Not Rocket Science</h3><p>End-to-end guidance-system modelling in MATLAB and Simulink, combined with ArUco-based vision tracking and real-time control loops.</p><div class="tags"><span class="tag">MATLAB</span><span class="tag">Simulink</span><span class="tag">ArUco</span><span class="tag">Control</span></div></div></article>
+    <article class="project reveal"><div class="projectVisual"><div class="visualLines"></div><span class="label">IOT / WEB</span></div><a class="projectlink" href="#" onclick="openProject('gps');return false;">↗</a><div class="projectBody"><h3>Cycle GPS Tracker</h3><p>Real-time GPS tracking system with a web dashboard for live routes and system status, plus offline coordinate caching during connection drops.</p><div class="tags"><span class="tag">GPS</span><span class="tag">Web</span><span class="tag">Data Logging</span></div></div></article>
+    <article class="project reveal"><div class="projectVisual"><div class="visualLines"></div><span class="label">ROBOTICS / COMPETITION</span></div><a class="projectlink" href="#" onclick="openProject('soccer');return false;">↗</a><div class="projectBody"><h3>Robosoccer — Prometeo</h3><p>Built and competed with manually controlled robotic soccer bots at IIT Jodhpur's Prometeo techfest, reaching the semi-final stage.</p><div class="tags"><span class="tag">Robotics</span><span class="tag">Prototyping</span><span class="tag">Competition</span></div></div></article>
+  </div>
+</div></section>
+
+<section id="journey"><div class="wrap">
+  <div class="sectionTop reveal"><div><div class="eyebrow">03 — Journey</div><h2>Where I've been<br>building.</h2></div><p>Education, engineering experience and the communities where I've worked on robotics.</p></div>
+  <div class="journey">
+    <div class="jitem reveal"><div class="jdate">JUL 2025 — PRESENT</div><div><h3>B.Tech — Materials Engineering</h3><div class="jorg">Indian Institute of Technology, Jodhpur</div><p>Building a foundation in engineering while pursuing robotics, machine learning and hands-on systems projects.</p></div></div>
+    <div class="jitem reveal"><div class="jdate">JUN 2026 — NOV 2026</div><div><h3>Robotics & Systems Engineering Intern</h3><div class="jorg">ViTachyon Robotics · IIIT Delhi</div><p>Designed a custom haptic interface for real-time telemetry and control of a Universal Robots arm; worked with Python, ROS, NumPy, PySerial and RTDE.</p></div></div>
+    <div class="jitem reveal"><div class="jdate">MAR 2026</div><div><h3>ISRO IROC-U 2026</h3><div class="jorg">ISRO · Bengaluru</div><p>Worked on an autonomous drone and automated docking/charging mechanism for GPS-denied environments; advanced to Round 3.</p></div></div>
+    <div class="jitem reveal"><div class="jdate">2025 — PRESENT</div><div><h3>Robotics Society · ARTL</h3><div class="jorg">IIT Jodhpur</div><p>Core member contributing to robotics projects, competitions and technical activities.</p></div></div>
+  </div>
+</div></section>
+
+<section id="skills"><div class="wrap">
+  <div class="sectionTop reveal"><div><div class="eyebrow">04 — Toolkit</div><h2>Tools I use<br>to build.</h2></div><p>A practical stack across programming, robotics, simulation, vision and engineering.</p></div>
+  <div class="skillgrid">
+    <div class="skill reveal"><small>Programming</small>C / C++</div><div class="skill reveal"><small>Programming</small>Python</div><div class="skill reveal"><small>Robotics</small>ROS</div><div class="skill reveal"><small>Vision</small>OpenCV</div>
+    <div class="skill reveal"><small>Control</small>MATLAB / Simulink</div><div class="skill reveal"><small>Autonomy</small>PX4 Autopilot</div><div class="skill reveal"><small>Simulation</small>Genesis</div><div class="skill reveal"><small>Communication</small>PySerial / UDP</div>
+    <div class="skill reveal"><small>Data</small>NumPy</div><div class="skill reveal"><small>Tools</small>Git</div><div class="skill reveal"><small>Design</small>CAD</div><div class="skill reveal"><small>Hardware</small>OrangeCube</div>
+  </div>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <div class="sectionTop reveal"><div><div class="eyebrow">05 — Contact</div><h2>Let's build<br>something.</h2></div><p>I'm interested in robotics projects, autonomous systems, engineering collaborations and opportunities to learn by building.</p></div>
+  <div class="contactBox">
+    <div class="contactMain reveal"><div class="eyebrow">Open to conversations</div><h3>Have a robot<br>in mind?</h3><p>Whether it's a mechanism, autonomous system, computer-vision problem or a project worth prototyping, feel free to reach out.</p><div class="cta"><a class="btn primary" href="mailto:amansharma44p@gmail.com">Email me ↗</a></div></div>
+    <div class="contactLinks reveal">
+      <a class="contactLink" href="https://www.linkedin.com/in/aman-sharma-iitj/" target="_blank"><strong>LinkedIn</strong><span>linkedin.com/in/aman-sharma-iitj</span></a>
+      <a class="contactLink" href="https://github.com/Okayharsuuu" target="_blank"><strong>GitHub</strong><span>github.com/Okayharsuuu</span></a>
+      <a class="contactLink" href="mailto:amansharma44p@gmail.com"><strong>Email</strong><span>amansharma44p@gmail.com</span></a>
+    </div>
+  </div>
+</div></section>
+
+<footer class="wrap"><span>© 2026 Aman Sharma</span><span>Robotics · Systems · Learning by building</span></footer>
+
+<div id="modal" style="display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);padding:25px;overflow:auto">
+ <div style="width:min(760px,100%);margin:8vh auto;background:#101515;border:1px solid #28332f;border-radius:20px;padding:30px;position:relative">
+  <button onclick="closeProject()" style="position:absolute;right:18px;top:18px;width:36px;height:36px;border:1px solid #28332f;border-radius:9px;background:#0b0f0f;color:#fff;cursor:pointer">×</button>
+  <div class="eyebrow" id="mKicker"></div><h2 id="mTitle" style="margin-top:10px"></h2><p id="mText" style="color:#94a19c"></p>
+  <div id="mTags" class="tags" style="margin-top:20px"></div>
+ </div>
+</div>
+
+<script>
+const data={
+ quad:{k:"UAV / COMPUTER VISION",t:"VR Target-Tracking Quadcopter",d:"An ongoing self-learning project involving a quadcopter integrated with an OrangeCube+ flight controller and SIYI MK15 link. The vision pipeline is being developed for real-time human detection, tracking and target-outline extraction, with the extracted outline intended for a dynamic third-person perspective view on an operator's VR headset without streaming raw video.",tags:["OrangeCube+","SIYI MK15","Computer Vision","UAV","VR"]},
+ missile:{k:"GUIDANCE / CONTROL",t:"Not Rocket Science — Missile Interception System",d:"A self-learning project modelling an end-to-end guidance system using MATLAB and Simulink, integrating vision algorithms for ArUco marker tracking through a 2-axis gimbal camera setup and real-time control loops for continuous target tracking.",tags:["MATLAB","Simulink","ArUco","Gimbal","Control"]},
+ gps:{k:"IOT / WEB",t:"Cycle GPS Tracker",d:"A real-time GPS tracker with a web dashboard for live routes and system status. An offline caching pipeline logs coordinates during connection drops to avoid data loss.",tags:["GPS","Web Dashboard","Caching","Data Logging"]},
+ soccer:{k:"ROBOTICS / COMPETITION",t:"Robosoccer — Prometeo",d:"A robotics competition project at IIT Jodhpur's Prometeo techfest. The team built manually controlled robotic soccer bots and reached the semi-final stage.",tags:["Robotics","Prototyping","Competition"]}
+};
+function openProject(k){const x=data[k];mKicker.textContent=x.k;mTitle.textContent=x.t;mText.textContent=x.d;mTags.innerHTML=x.tags.map(t=>`<span class="tag">${t}</span>`).join("");modal.style.display="block";document.body.style.overflow="hidden"}
+function closeProject(){modal.style.display="none";document.body.style.overflow=""}
+modal.addEventListener("click",e=>{if(e.target===modal)closeProject()});
+topBtn.onclick=()=>scrollTo({top:0,behavior:"smooth"});
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add("show")}),{threshold:.08});
+document.querySelectorAll(".reveal").forEach(x=>obs.observe(x));
+menuBtn.onclick=()=>document.querySelector(".navlinks").classList.toggle("mobile");
+</script>
+</body>
+</html>
